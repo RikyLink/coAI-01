@@ -8,7 +8,6 @@
     "declarativeNetRequest",
     "declarativeNetRequestFeedback",
     "contextMenus",
-    "scripting",
     "storage"
   ],
   "host_permissions": [

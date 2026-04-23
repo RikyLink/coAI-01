@@ -10,4 +10,30 @@ iframe {
   width: 100%;
   height: 100%;
   border: none;
-}
+}
+
+#status-overlay {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(113, 58, 155, 0.95); /* Roxo EVA-01 */
+  color: #00FF41; /* Verde Neon */
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 9999;
+  pointer-events: none;
+  border: 1px solid #00FF41;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#status-overlay.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(5px);
+}
