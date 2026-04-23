@@ -9,6 +9,33 @@ chrome.runtime.onInstalled.addListener(() => {
     title: "📋 Copiar Prompt do Tutor",
     contexts: ["action"]
   });
+
+  chrome.contextMenus.create({
+    id: "select-ai",
+    title: "🤖 Selecionar Interface IA",
+    contexts: ["action"]
+  });
+
+  chrome.contextMenus.create({
+    id: "ai-studio",
+    parentId: "select-ai",
+    title: "Google AI Studio",
+    contexts: ["action"]
+  });
+
+  chrome.contextMenus.create({
+    id: "gemini",
+    parentId: "select-ai",
+    title: "Gemini",
+    contexts: ["action"]
+  });
+
+  chrome.contextMenus.create({
+    id: "deepseek",
+    parentId: "select-ai",
+    title: "DeepSeek",
+    contexts: ["action"]
+  });
 });
 
 // Escuta o clique no menu de contexto
@@ -18,6 +45,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       target: { tabId: tab.id },
       func: showPromptUI
     });
+  } else if (["ai-studio", "gemini", "deepseek"].includes(info.menuItemId)) {
+    const urls = {
+      "ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
+      "gemini": "https://gemini.google.com/app",
+      "deepseek": "https://chat.deepseek.com/"
+    };
+    chrome.storage.local.set({ selectedAI: urls[info.menuItemId] });
   }
 });
 
