@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "AI Studio Side Panel",
+  "name": "Colatron 3000",
   "version": "1.0",
-  "description": "Abre o Google AI Studio na barra lateral do Chrome",
+  "description": "Abre o Google AI Studio na barra lateral do Chrome via Colatron 3000",
   "permissions": [
     "sidePanel",
     "declarativeNetRequest",
@@ -14,8 +14,15 @@
   "background": {
     "service_worker": "background.js"
   },
+  "icons": {
+    "16": "Colatron.png",
+    "32": "Colatron.png",
+    "48": "Colatron.png",
+    "128": "Colatron.png"
+  },
   "action": {
-    "default_title": "Abrir AI Studio"
+    "default_title": "Abrir AI Studio",
+    "default_icon": "Colatron.png"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
