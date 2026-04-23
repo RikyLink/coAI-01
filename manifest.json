@@ -6,7 +6,9 @@
   "permissions": [
     "sidePanel",
     "declarativeNetRequest",
-    "declarativeNetRequestFeedback"
+    "declarativeNetRequestFeedback",
+    "contextMenus",
+    "scripting"
   ],
   "host_permissions": [
     "https://aistudio.google.com/*"
