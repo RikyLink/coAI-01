@@ -58,7 +58,6 @@ Seja direto e use negrito nos termos principais.
 
 ---
 
----
 ## ⚖️ Licença
 
 Este projeto está sob a licença **MIT**. Sinta-se livre para modificar, distribuir e evoluir o sistema como desejar.
