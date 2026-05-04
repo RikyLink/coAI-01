@@ -1,7 +1,7 @@
 # 🟣 COLATRON 3000 🟢
 
 <p align="center">
-  <img src="https://img.shields.io/badge/VERSION-1.0-blueviolet?style=for-the-badge&logo=googlechrome&logoColor=white" />
+  <img src="https://img.shields.io/badge/VERSION-1.0.1-blueviolet?style=for-the-badge&logo=googlechrome&logoColor=white" />
   <img src="https://img.shields.io/badge/THEME-EVA--01-713A9B?style=for-the-badge" />
   <img src="https://img.shields.io/badge/LICENSE-MIT-00FF41?style=for-the-badge&labelColor=black" />
 </p>
