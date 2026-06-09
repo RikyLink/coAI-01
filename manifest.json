@@ -14,7 +14,8 @@
     "https://aistudio.google.com/*",
     "https://gemini.google.com/*",
     "https://chat.deepseek.com/*",
-    "https://chatgpt.com/*"
+    "https://chatgpt.com/*",
+    "https://copilot.microsoft.com/*"
   ],
   "background": {
     "service_worker": "background.js"

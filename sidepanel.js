@@ -8,7 +8,8 @@ const names = {
   "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview": "AI Studio",
   "https://gemini.google.com/app": "Gemini",
   "https://chat.deepseek.com/": "DeepSeek",
-  "https://chatgpt.com/": "ChatGPT"
+  "https://chatgpt.com/": "ChatGPT",
+  "https://copilot.microsoft.com/": "Copilot"
 };
 
 function showFeedback(url) {
@@ -58,11 +59,11 @@ backBtn.addEventListener('click', () => {
     showHub();
   });
 });
+
 // Click na assinatura do github
 document.querySelector('.bottom-left-signature').addEventListener('click', () => {
   window.open('https://github.com/RikyLink', '_blank');
 });
-
 
 // Escuta mudanças no storage (ex: menu de contexto)
 chrome.storage.onChanged.addListener((changes, area) => {
