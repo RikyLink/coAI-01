@@ -4,7 +4,7 @@ body, html {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background: #F4ECE1; /* Cor de papel envelhecido suave */
+  background: #F4ECE1;
 }
 
 /* ---- IFRAME ---- */
@@ -19,7 +19,7 @@ iframe.active {
   display: block;
 }
 
-/* ---- STATUS OVERLAY (Estilo Pílula Escura) ---- */
+/* ---- STATUS OVERLAY ---- */
 #status-overlay {
   position: fixed;
   top: 15px;
@@ -74,7 +74,6 @@ iframe.active {
   max-width: 320px;
 }
 
-/* Letra de fundo gigante */
 .bg-outline-text {
   position: absolute;
   left: 5%;
@@ -90,7 +89,6 @@ iframe.active {
   white-space: nowrap;
   letter-spacing: 4px;
 }
-
 
 /* Cabeçalho */
 .hub-header {
@@ -117,7 +115,7 @@ iframe.active {
   text-transform: uppercase;
 }
 
-/* Botões Estilo Pílula (Cards) */
+/* Botões Cards */
 .hub-grid {
   display: flex;
   flex-direction: column;
@@ -140,7 +138,6 @@ iframe.active {
   box-shadow: 0 2px 5px rgba(0,0,0,0.02);
 }
 
-/* Primeiro Card em Destaque (Sólido Escuro, similar ao nav "CHARACTER") */
 .hub-card:first-child {
   background: #1A1A1A;
   color: #FFFFFF;
@@ -151,8 +148,13 @@ iframe.active {
 }
 
 .card-icon {
-  font-size: 20px;
   flex-shrink: 0;
+  line-height: 0;
+}
+.card-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 .card-info {
@@ -178,7 +180,6 @@ iframe.active {
   margin-top: 1px;
 }
 
-/* Hover mimetizando a cor de destaque coral/rosado do cabelo da Makima */
 .hub-card:hover {
   background: #C86B6B;
   border-color: #C86B6B;
@@ -215,7 +216,6 @@ iframe.active {
   margin-top: 2px;
 }
 
-/* Detalhes de Texto Adicionais (Cantos Inferiores) */
 .bottom-left-signature {
   position: absolute;
   bottom: 25px;
@@ -248,9 +248,6 @@ iframe.active {
   width: 100%;
 }
 
-/* Removido o bloco .stacked-logo, .logo-top e .logo-bottom */
-
-/* ---- BOTÃO VOLTAR (Pílula Redonda Escura) ---- */
 #back-to-hub {
   position: fixed;
   bottom: 15px;
