@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Colatron 3000",
+  "name": "coIA-01",
   "version": "1.0.3",
-  "description": "Abre o Google AI Studio na barra lateral do Chrome via Colatron 3000",
+  "description": "Abre o Google AI Studio na barra lateral do Chrome via coIA-01",
   "permissions": [
     "sidePanel",
     "declarativeNetRequest",

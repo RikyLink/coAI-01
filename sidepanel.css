@@ -4,36 +4,279 @@ body, html {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background: #F4ECE1; /* Cor de papel envelhecido suave */
 }
 
+/* ---- IFRAME ---- */
 iframe {
   width: 100%;
   height: 100%;
   border: none;
+  display: none;
 }
 
+iframe.active {
+  display: block;
+}
+
+/* ---- STATUS OVERLAY (Estilo Pílula Escura) ---- */
 #status-overlay {
   position: fixed;
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(113, 58, 155, 0.95); /* Roxo EVA-01 */
-  color: #00FF41; /* Verde Neon */
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1A1A1A;
+  color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
   font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   z-index: 9999;
   pointer-events: none;
-  border: 1px solid #00FF41;
   opacity: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 #status-overlay.active {
   opacity: 1;
   transform: translateX(-50%) translateY(5px);
+}
+
+/* ---- HUB ---- */
+#hub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  /* Gradients que mimetizam as sombras de papel amassado da imagem */
+  background: #F4ECE1;
+  background-image: 
+    linear-gradient(135deg, rgba(255,255,255,0.45) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(0,0,0,0.02) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #FAF7F2 0%, #E9E1D5 100%);
+}
+
+.hub-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+/* Letra de fundo gigante */
+.bg-outline-text {
+  position: absolute;
+  left: 5%;
+  top: 25%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11vw;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.01);
+  -webkit-text-stroke: 1.2px rgba(0, 0, 0, 0.04);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+  letter-spacing: 4px;
+}
+
+
+/* Cabeçalho */
+.hub-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.hub-header .main-title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #1A1A1A;
+}
+
+.hub-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8E867C;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* Botões Estilo Pílula (Cards) */
+.hub-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.hub-card {
+  background: #FFFFFF;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 50px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #1A1A1A;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* Primeiro Card em Destaque (Sólido Escuro, similar ao nav "CHARACTER") */
+.hub-card:first-child {
+  background: #1A1A1A;
+  color: #FFFFFF;
+}
+
+.hub-card:first-child .card-desc {
+  color: #A0A0A0;
+}
+
+.card-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.card-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.card-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7E766C;
+  margin-top: 1px;
+}
+
+/* Hover mimetizando a cor de destaque coral/rosado do cabelo da Makima */
+.hub-card:hover {
+  background: #C86B6B;
+  border-color: #C86B6B;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(200, 107, 107, 0.2);
+}
+
+.hub-card:hover .card-desc {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Assinatura */
+.signature-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.signature-text {
+  font-family: 'Caveat', cursive;
+  font-size: 38px;
+  color: #1A1A1A;
+  line-height: 0.8;
+}
+
+.signature-line {
+  width: 120px;
+  height: 1.5px;
+  background: #1A1A1A;
+  margin-top: 2px;
+}
+
+/* Detalhes de Texto Adicionais (Cantos Inferiores) */
+.bottom-left-signature {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: #8E867C;
+  user-select: none;
+}
+
+.stacked-logo {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  text-align: right;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 0.85;
+  user-select: none;
+}
+
+.logo-top {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #C86B6B;
+}
+
+.logo-bottom {
+  font-size: 24px;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px #C86B6B;
+  letter-spacing: 1px;
+}
+
+/* ---- BOTÃO VOLTAR (Pílula Redonda Escura) ---- */
+#back-to-hub {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  z-index: 9998;
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+#back-to-hub:hover {
+  background: #C86B6B;
+  transform: scale(1.05);
+}
+
+#back-to-hub.visible {
+  display: flex;
 }

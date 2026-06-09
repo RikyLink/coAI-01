@@ -2,11 +2,85 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="sidepanel.css">
 </head>
 <body>
   <div id="status-overlay"></div>
+  
+  <!-- HUB DE SELEÇÃO -->
+  <div id="hub">
+    <!-- Texto sutil de fundo vazado (estilo a imagem de referência) -->
+    <div class="bg-outline-text">coIA-01</div>
+    
+
+    <div class="hub-container">
+      <!-- Cabeçalho Editorial -->
+      <div class="hub-header">
+        <h1 class="main-title">coIA-01</h1>
+        <div class="hub-subtitle">INTEGRAÇÃO INTELIGENTE DE INTERFACES</div>
+      </div>
+
+      <!-- Grid de Opções (Botões em pílula alternando entre sólido e outline) -->
+      <div class="hub-grid">
+        <button class="hub-card" data-url="https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview">
+          <span class="card-icon">🧪</span>
+          <div class="card-info">
+            <span class="card-name">Google AI Studio</span>
+            <span class="card-desc">Gemini Flash Preview</span>
+          </div>
+        </button>
+        <button class="hub-card" data-url="https://gemini.google.com/app">
+          <span class="card-icon">💎</span>
+          <div class="card-info">
+            <span class="card-name">Gemini</span>
+            <span class="card-desc">Assistente Google</span>
+          </div>
+        </button>
+        <button class="hub-card" data-url="https://chat.deepseek.com/">
+          <span class="card-icon">🐋</span>
+          <div class="card-info">
+            <span class="card-name">DeepSeek</span>
+            <span class="card-desc">Raciocínio Profundo</span>
+          </div>
+        </button>
+        <button class="hub-card" data-url="https://chatgpt.com/">
+          <span class="card-icon">🧠</span>
+          <div class="card-info">
+            <span class="card-name">ChatGPT</span>
+            <span class="card-desc">Modelo OpenAI</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Assinatura em Cursiva estilo "Makima" -->
+      <div class="signature-section">
+        <div class="signature-text">coIA-01</div>
+        <div class="signature-line"></div>
+      </div>
+    </div>
+
+    <!-- Créditos no canto inferior esquerdo -->
+    <div class="bottom-left-signature">
+      riky on github
+    </div>
+
+    <!-- Marca d'água no canto inferior direito estilo "Chainsaw Man" -->
+    <div class="stacked-logo">
+      <div class="logo-top">coIA-01</div>
+      <div class="logo-bottom">SYS</div>
+    </div>
+  </div>
+
+  <!-- IFRAME DA IA -->
   <iframe id="ai-frame" src="about:blank" frameborder="0"></iframe>
+  
+  <!-- BOTÃO VOLTAR AO HUB -->
+  <button id="back-to-hub" title="Voltar ao Hub">◀</button>
+
   <script src="sidepanel.js"></script>
 </body>
 </html>
