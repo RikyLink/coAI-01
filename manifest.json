@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "coIA-01",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Abre o Google AI Studio na barra lateral do Chrome via coIA-01",
   "permissions": [
     "sidePanel",
@@ -21,14 +21,14 @@
     "service_worker": "background.js"
   },
   "icons": {
-    "16": "Colatron.png",
-    "32": "Colatron.png",
-    "48": "Colatron.png",
-    "128": "Colatron.png"
+    "16": "coAI.png",
+    "32": "coAI.png",
+    "48": "coAI.png",
+    "128": "coAI.png"
   },
   "action": {
     "default_title": "Abrir AI Studio",
-    "default_icon": "Colatron.png"
+    "default_icon": "coAI.png"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
