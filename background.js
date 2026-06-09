@@ -35,6 +35,13 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["action"]
     });
 
+    chrome.contextMenus.create({
+      id: "chatgpt",
+      parentId: "select-ai",
+      title: "ChatGPT",
+      contexts: ["action"]
+    });
+
     // ----- MENU NAS PÁGINAS (clique direito em qualquer site) -----
     chrome.contextMenus.create({
       id: "page-select-ai",
@@ -62,6 +69,13 @@ chrome.runtime.onInstalled.addListener(() => {
       title: "DeepSeek",
       contexts: ["page"]
     });
+
+    chrome.contextMenus.create({
+      id: "page-chatgpt",
+      parentId: "page-select-ai",
+      title: "ChatGPT",
+      contexts: ["page"]
+    });
   });
 });
 
@@ -72,10 +86,12 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     "ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "gemini": "https://gemini.google.com/app",
     "deepseek": "https://chat.deepseek.com/",
+    "chatgpt": "https://chatgpt.com/",
     // Menus das páginas
     "page-ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "page-gemini": "https://gemini.google.com/app",
-    "page-deepseek": "https://chat.deepseek.com/"
+    "page-deepseek": "https://chat.deepseek.com/",
+    "page-chatgpt": "https://chatgpt.com/"
   };
 
   // Verifica se o clique foi em uma das opções de IA
