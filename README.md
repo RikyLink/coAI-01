@@ -1,4 +1,4 @@
-#  coIA-01
+<h1 align="center">coIA-01</h1>
 
 <p align="center">
   <a href="https://github.com/RikyLink/Colatron-3000/releases">
