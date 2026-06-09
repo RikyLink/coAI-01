@@ -5,9 +5,8 @@ chrome.sidePanel
 
 // Cria os menus de contexto (tanto no ícone quanto nas páginas)
 chrome.runtime.onInstalled.addListener(() => {
-  // Remove todos os menus antigos para evitar duplicação
   chrome.contextMenus.removeAll(() => {
-    // ----- MENU NO ÍCONE DA EXTENSÃO (clique direito no ícone) -----
+    // ----- MENU NO ÍCONE DA EXTENSÃO -----
     chrome.contextMenus.create({
       id: "select-ai",
       title: "🤖 Selecionar Interface IA",
@@ -42,7 +41,14 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["action"]
     });
 
-    // ----- MENU NAS PÁGINAS (clique direito em qualquer site) -----
+    chrome.contextMenus.create({
+      id: "copilot",
+      parentId: "select-ai",
+      title: "Copilot",
+      contexts: ["action"]
+    });
+
+    // ----- MENU NAS PÁGINAS -----
     chrome.contextMenus.create({
       id: "page-select-ai",
       title: "🤖 Abrir Colatron com IA",
@@ -76,29 +82,33 @@ chrome.runtime.onInstalled.addListener(() => {
       title: "ChatGPT",
       contexts: ["page"]
     });
+
+    chrome.contextMenus.create({
+      id: "page-copilot",
+      parentId: "page-select-ai",
+      title: "Copilot",
+      contexts: ["page"]
+    });
   });
 });
 
 // Escuta cliques nos menus de contexto
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const urls = {
-    // Menus do ícone da extensão
     "ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "gemini": "https://gemini.google.com/app",
     "deepseek": "https://chat.deepseek.com/",
     "chatgpt": "https://chatgpt.com/",
-    // Menus das páginas
+    "copilot": "https://copilot.microsoft.com/",
     "page-ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "page-gemini": "https://gemini.google.com/app",
     "page-deepseek": "https://chat.deepseek.com/",
-    "page-chatgpt": "https://chatgpt.com/"
+    "page-chatgpt": "https://chatgpt.com/",
+    "page-copilot": "https://copilot.microsoft.com/"
   };
 
-  // Verifica se o clique foi em uma das opções de IA
   if (urls[info.menuItemId]) {
-    // Salva a IA escolhida no storage
     chrome.storage.local.set({ selectedAI: urls[info.menuItemId] }, () => {
-      // Se o clique veio do menu da página, abre o painel lateral automaticamente
       if (info.menuItemId.startsWith("page-") && tab && tab.id) {
         chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
           console.error("Erro ao abrir painel lateral:", err);

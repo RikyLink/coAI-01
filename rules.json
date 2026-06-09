@@ -58,5 +58,20 @@
       "urlFilter": "https://chatgpt.com/*",
       "resourceTypes": ["sub_frame"]
     }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "responseHeaders": [
+        { "header": "x-frame-options", "operation": "remove" },
+        { "header": "content-security-policy", "operation": "remove" }
+      ]
+    },
+    "condition": {
+      "urlFilter": "https://copilot.microsoft.com/*",
+      "resourceTypes": ["sub_frame"]
+    }
   }
-]
+]
