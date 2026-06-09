@@ -113,6 +113,15 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
       chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
         console.error("Erro ao abrir painel lateral:", err);
       });
+    } else {
+      // For action (icon) context, we need the active tab's id
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length > 0) {
+          chrome.sidePanel.open({ tabId: tabs[0].id }).catch(err => {
+            console.error("Erro ao abrir painel lateral:", err);
+          });
+        }
+      });
     }
     // Then update the storage (the side panel will pick up the URL change)
     chrome.storage.local.set({ selectedAI: urls[info.menuItemId] });
