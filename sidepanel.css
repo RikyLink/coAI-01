@@ -4,36 +4,345 @@ body, html {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background: #F4ECE1;
 }
 
+/* ---- IFRAME ---- */
 iframe {
   width: 100%;
   height: 100%;
   border: none;
+  display: none;
 }
 
+iframe.active {
+  display: block;
+}
+
+/* ---- STATUS OVERLAY ---- */
 #status-overlay {
   position: fixed;
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(113, 58, 155, 0.95); /* Roxo EVA-01 */
-  color: #00FF41; /* Verde Neon */
-  padding: 6px 14px;
-  border-radius: 4px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #1A1A1A;
+  color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
   font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   z-index: 9999;
   pointer-events: none;
-  border: 1px solid #00FF41;
   opacity: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 #status-overlay.active {
   opacity: 1;
   transform: translateX(-50%) translateY(5px);
+}
+
+/* ---- HUB ---- */
+#hub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 30px 20px;
+  box-sizing: border-box;
+  /* Gradients que mimetizam as sombras de papel amassado da imagem */
+  background: #F4ECE1;
+  background-image: 
+    linear-gradient(135deg, rgba(255,255,255,0.45) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(0,0,0,0.02) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, #FAF7F2 0%, #E9E1D5 100%);
+}
+
+.hub-container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+.bg-outline-text {
+  position: absolute;
+  left: 5%;
+  top: 25%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11vw;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.01);
+  -webkit-text-stroke: 1.2px rgba(0, 0, 0, 0.04);
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  white-space: nowrap;
+  letter-spacing: 4px;
+}
+
+/* Cabeçalho */
+.hub-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.hub-header .main-title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #1A1A1A;
+}
+
+.hub-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8E867C;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* Botões Cards */
+.hub-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.hub-card {
+  background: #FFFFFF;
+  border: 1.5px solid #1A1A1A;
+  border-radius: 50px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #1A1A1A;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.hub-card:first-child {
+  background: #1A1A1A;
+  color: #FFFFFF;
+}
+
+.hub-card:first-child .card-desc {
+  color: #A0A0A0;
+}
+
+.card-icon {
+  flex-shrink: 0;
+  line-height: 0;
+}
+.card-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.card-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.card-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7E766C;
+  margin-top: 1px;
+}
+
+.hub-card:hover {
+  background: #C86B6B;
+  border-color: #C86B6B;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(200, 107, 107, 0.2);
+}
+
+.hub-card:hover .card-desc {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Assinatura */
+.signature-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-start;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.signature-text {
+  font-family: 'Caveat', cursive;
+  font-size: 38px;
+  color: #1A1A1A;
+  line-height: 0.8;
+}
+
+.signature-line {
+  width: 120px;
+  height: 1.5px;
+  background: #1A1A1A;
+  margin-top: 2px;
+}
+
+.bottom-left-signature {
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  color: #8E867C;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.bottom-left-signature:hover {
+  color: #C86B6B;
+  transform: scale(1.05);
+}
+
+.bottom-left-signature::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0%;
+  height: 1px;
+  background: #C86B6B;
+  transition: width 0.3s ease;
+}
+
+.bottom-left-signature:hover::after {
+  width: 100%;
+}
+
+#back-to-hub {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  z-index: 9998;
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+#back-to-hub:hover {
+  background: #C86B6B;
+  transform: scale(1.05);
+}
+
+#back-to-hub.visible {
+  display: flex;
+}
+
+/* ---- LOADING SCREEN ---- */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(244, 236, 225, 0.95); /* tom do fundo do hub */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9997;
+  backdrop-filter: blur(4px);
+}
+
+#loading-screen.active {
+  display: flex;
+}
+
+/* Loader (bateria animada) */
+.loader {
+  width: 48px;
+  height: 40px;
+  position: relative;
+  background: #1A1A1A;
+  border-radius: 15% 15% 35% 35%;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 45px;
+  top: 8px;
+  border: 4px solid #1A1A1A;
+  width: 16px;
+  height: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.loader::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  color: #1A1A1A;
+  top: -15px;
+  left: 11px;
+  box-sizing: border-box;
+  animation: animloader 1s ease infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 2px 0px rgba(0, 0, 0, 0),
+                12px 0px rgba(0, 0, 0, 0.3),
+                20px 0px rgba(0, 0, 0, 0);
+  }
+  50% {
+    box-shadow: 2px -5px rgba(0, 0, 0, 0.5),
+                12px -3px rgba(0, 0, 0, 0.5),
+                20px -2px rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    box-shadow: 2px -8px rgba(0, 0, 0, 0),
+                12px -5px rgba(0, 0, 0, 0),
+                20px -5px rgba(0, 0, 0, 0);
+  }
 }

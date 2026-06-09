@@ -5,9 +5,8 @@ chrome.sidePanel
 
 // Cria os menus de contexto (tanto no ícone quanto nas páginas)
 chrome.runtime.onInstalled.addListener(() => {
-  // Remove todos os menus antigos para evitar duplicação
   chrome.contextMenus.removeAll(() => {
-    // ----- MENU NO ÍCONE DA EXTENSÃO (clique direito no ícone) -----
+    // ----- MENU NO ÍCONE DA EXTENSÃO -----
     chrome.contextMenus.create({
       id: "select-ai",
       title: "🤖 Selecionar Interface IA",
@@ -35,10 +34,24 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["action"]
     });
 
-    // ----- MENU NAS PÁGINAS (clique direito em qualquer site) -----
+    chrome.contextMenus.create({
+      id: "chatgpt",
+      parentId: "select-ai",
+      title: "ChatGPT",
+      contexts: ["action"]
+    });
+
+    chrome.contextMenus.create({
+      id: "copilot",
+      parentId: "select-ai",
+      title: "Copilot",
+      contexts: ["action"]
+    });
+
+    // ----- MENU NAS PÁGINAS -----
     chrome.contextMenus.create({
       id: "page-select-ai",
-      title: "🤖 Abrir Colatron com IA",
+      title: "🤖 Abrir coIA-01 com IA",
       contexts: ["page"]
     });
 
@@ -62,32 +75,55 @@ chrome.runtime.onInstalled.addListener(() => {
       title: "DeepSeek",
       contexts: ["page"]
     });
+
+    chrome.contextMenus.create({
+      id: "page-chatgpt",
+      parentId: "page-select-ai",
+      title: "ChatGPT",
+      contexts: ["page"]
+    });
+
+    chrome.contextMenus.create({
+      id: "page-copilot",
+      parentId: "page-select-ai",
+      title: "Copilot",
+      contexts: ["page"]
+    });
   });
 });
 
 // Escuta cliques nos menus de contexto
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   const urls = {
-    // Menus do ícone da extensão
     "ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "gemini": "https://gemini.google.com/app",
     "deepseek": "https://chat.deepseek.com/",
-    // Menus das páginas
+    "chatgpt": "https://chatgpt.com/",
+    "copilot": "https://copilot.microsoft.com/",
     "page-ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "page-gemini": "https://gemini.google.com/app",
-    "page-deepseek": "https://chat.deepseek.com/"
+    "page-deepseek": "https://chat.deepseek.com/",
+    "page-chatgpt": "https://chatgpt.com/",
+    "page-copilot": "https://copilot.microsoft.com/"
   };
 
-  // Verifica se o clique foi em uma das opções de IA
   if (urls[info.menuItemId]) {
-    // Salva a IA escolhida no storage
-    chrome.storage.local.set({ selectedAI: urls[info.menuItemId] }, () => {
-      // Se o clique veio do menu da página, abre o painel lateral automaticamente
-      if (info.menuItemId.startsWith("page-") && tab && tab.id) {
-        chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
-          console.error("Erro ao abrir painel lateral:", err);
-        });
-      }
-    });
+    // Open the side panel immediately to preserve the user gesture
+    if (info.menuItemId.startsWith("page-") && tab && tab.id) {
+      chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
+        console.error("Erro ao abrir painel lateral:", err);
+      });
+    } else {
+      // For action (icon) context, we need the active tab's id
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        if (tabs.length > 0) {
+          chrome.sidePanel.open({ tabId: tabs[0].id }).catch(err => {
+            console.error("Erro ao abrir painel lateral:", err);
+          });
+        }
+      });
+    }
+    // Then update the storage (the side panel will pick up the URL change)
+    chrome.storage.local.set({ selectedAI: urls[info.menuItemId] });
   }
 });
