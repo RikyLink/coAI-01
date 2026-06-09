@@ -108,12 +108,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   };
 
   if (urls[info.menuItemId]) {
-    chrome.storage.local.set({ selectedAI: urls[info.menuItemId] }, () => {
-      if (info.menuItemId.startsWith("page-") && tab && tab.id) {
-        chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
-          console.error("Erro ao abrir painel lateral:", err);
-        });
-      }
-    });
+    // Open the side panel immediately to preserve the user gesture
+    if (info.menuItemId.startsWith("page-") && tab && tab.id) {
+      chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
+        console.error("Erro ao abrir painel lateral:", err);
+      });
+    }
+    // Then update the storage (the side panel will pick up the URL change)
+    chrome.storage.local.set({ selectedAI: urls[info.menuItemId] });
   }
 });
