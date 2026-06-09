@@ -1,33 +1,93 @@
 const iframe = document.getElementById('ai-frame');
 const overlay = document.getElementById('status-overlay');
+const hub = document.getElementById('hub');
+const loadingScreen = document.getElementById('loading-screen');
+const backBtn = document.getElementById('back-to-hub');
 const defaultUrl = "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview";
 
 const names = {
   "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview": "AI Studio",
   "https://gemini.google.com/app": "Gemini",
-  "https://chat.deepseek.com/": "DeepSeek"
+  "https://chat.deepseek.com/": "DeepSeek",
+  "https://chatgpt.com/": "ChatGPT",
+  "https://copilot.microsoft.com/": "Copilot"
 };
 
 function showFeedback(url) {
   const name = names[url] || "Interface";
   overlay.textContent = `SYNC: ${name}`;
   overlay.classList.add('active');
-
-  // Remove o feedback após 2 segundos
-  setTimeout(() => {
-    overlay.classList.remove('active');
-  }, 2000);
+  setTimeout(() => overlay.classList.remove('active'), 2000);
 }
 
-// Carrega a IA salva ou a padrão ao abrir
+function showHub() {
+  hub.style.display = 'flex';
+  loadingScreen.classList.remove('active');
+  iframe.classList.remove('active');
+  iframe.src = 'about:blank';
+  backBtn.classList.remove('visible');
+}
+
+function loadAI(url) {
+  hub.style.display = 'none';
+  // Oculta o iframe e exibe a tela de loading
+  iframe.classList.remove('active');
+  loadingScreen.classList.add('active');
+
+  // Quando o iframe terminar de carregar, remove o loading
+  iframe.addEventListener('load', function onLoad() {
+    if (iframe.src !== 'about:blank') {
+      loadingScreen.classList.remove('active');
+      iframe.classList.add('active');
+    }
+    iframe.removeEventListener('load', onLoad);
+  });
+
+  iframe.src = url;
+  backBtn.classList.add('visible');
+}
+
+// Inicialização: verifica se há IA salva
 chrome.storage.local.get(['selectedAI'], (result) => {
-  iframe.src = result.selectedAI || defaultUrl;
+  if (result.selectedAI && result.selectedAI !== 'hub') {
+    loadAI(result.selectedAI);
+  } else {
+    showHub();
+  }
 });
 
-// Escuta mudanças no storage para trocar a IA em tempo real
+// Clique nos cards do hub
+document.querySelectorAll('.hub-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const url = card.dataset.url;
+    chrome.storage.local.set({ selectedAI: url }, () => {
+      loadAI(url);
+      showFeedback(url);
+    });
+  });
+});
+
+// Botão voltar ao hub
+backBtn.addEventListener('click', () => {
+  chrome.storage.local.set({ selectedAI: 'hub' }, () => {
+    showHub();
+  });
+});
+
+// Click na assinatura do github
+document.querySelector('.bottom-left-signature').addEventListener('click', () => {
+  window.open('https://github.com/RikyLink', '_blank');
+});
+
+// Escuta mudanças no storage (ex: menu de contexto)
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.selectedAI) {
-    iframe.src = changes.selectedAI.newValue;
-    showFeedback(changes.selectedAI.newValue);
+    const newVal = changes.selectedAI.newValue;
+    if (newVal === 'hub') {
+      showHub();
+    } else if (newVal) {
+      loadAI(newVal);
+      showFeedback(newVal);
+    }
   }
 });

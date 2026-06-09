@@ -1,70 +1,49 @@
-# 🟣 COLATRON 3000 🟢
+<h1 align="center">coIA-01</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/VERSION-1.0.3-blueviolet?style=for-the-badge&logo=googlechrome&logoColor=white" />
-  <img src="https://img.shields.io/badge/THEME-EVA--01-713A9B?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/LICENSE-MIT-00FF41?style=for-the-badge&labelColor=black" />
+  <a href="https://github.com/RikyLink/Colatron-3000/releases">
+    <img src="https://shieldcn.dev/github/RikyLink/Colatron-3000/release.svg?color=F0ECE5" alt="Release">
+  </a>
+  <a href="https://github.com/RikyLink/Colatron-3000/commits">
+    <img src="https://shieldcn.dev/github/RikyLink/Colatron-3000/last-commit.svg?color=F0ECE5" alt="Last Commit">
+  </a>
+  <img src="https://shieldcn.dev/flag/Br.svg?color=F0ECE5" alt="Brazil">
 </p>
 
-> **STATUS:** SINCRONIZAÇÃO 100% COMPLETA. O Google AI Studio agora reside diretamente no seu Chrome Side Panel.
+---
 
-**Colatron 3000** é uma extensão minimalista e potente projetada para integrar o **Google AI Studio** diretamente na barra lateral do seu navegador. Esqueça o "Alt+Tab" constante; tenha o poder do Gemini sempre à vista enquanto navega.
+## ✨ Funcionalidades
+
+- ⚡ **Acesso instantâneo** – clique no ícone, o AI Studio aparece na lateral.
+- 🛠️ **Bypass de segurança** – uso de `declarativeNetRequest` para quebrar `X-Frame-Options`.
+- 🎨 **Layout otimizado** – CSS que faz o iframe ocupar 100% da área.
 
 ---
 
-## 🧬 Funcionalidades Core
+## 🧩 Instalação
 
-- ⚡ **Acesso Instantâneo:** Clique no ícone e a interface do AI Studio surge na lateral.
-- 🛠️ **Bypass de Segurança:** Utiliza `declarativeNetRequest` para contornar restrições de `X-Frame-Options`, permitindo que o AI Studio rode suavemente dentro de um iframe.
-- 🎨 **Layout Otimizado:** CSS customizado para garantir que o frame ocupe 100% da área disponível.
-
----
-
-## 🛠️ Instalação (Protocolo de Ativação)
-
-Siga os passos abaixo para inicializar o Colatron no seu sistema:
-
-1.  **Download do Código:**
-    - Baixe os arquivos deste repositório em uma pasta local no seu computador (ex: `C:\Users\Nome\Documents\Colatron3000`).
-2.  **Acesse as Extensões:**
-    - Abra o Google Chrome e digite `chrome://extensions/` na barra de endereços.
-3.  **Modo do Desenvolvedor:**
-    - No canto superior direito, ative a chave **"Modo do desenvolvedor"**.
-4.  **Carregar Extensão:**
-    - Clique no botão **"Carregar sem compactação"** que apareceu no canto superior esquerdo.
-    - Selecione a pasta onde você salvou os arquivos da extensão.
-5.  **Fixar e Usar:**
-    - Clique no ícone de peça de quebra-cabeça (Extensões) ao lado da barra de busca do Chrome.
-    - Encontre o **Colatron 3000** e clique no ícone do alfinete para fixar.
-    - **Clique no ícone roxo** e prepare-se para o deploy.
+1. Baixe os arquivos para uma pasta local.
+2. Acesse `chrome://extensions/` e ative o **Modo do desenvolvedor**.
+3. Clique em **"Carregar sem compactação"** e selecione a pasta.
+4. Fixe a extensão na barra e clique no ícone da extensão.
 
 ---
 
-## 📐 Estrutura do Sistema
+## 📁 Estrutura
 
-- `manifest.json`: O núcleo da extensão (V3).
-- `background.js`: Gerencia o comportamento de abertura do Side Panel.
-- `sidepanel.html/css`: A interface visual e o contêiner do AI Studio.
-- `rules.json`: Regras de rede para permitir o embedding do site oficial.
+- `manifest.json` – núcleo da extensão (V3)
+- `background.js` – gerencia o Side Panel
+- `sidepanel.html/css` – contêiner do AI Studio
+- `rules.json` – regras de rede para liberar o iframe
 
 ---
 
-## 🤖 Prompt
+## 🤖 Prompt (para tutor objetivo)
 
-Atue como um tutor objetivo. Para cada questão enviada, siga rigorosamente este formato:
-Resposta Direta: Comece com a alternativa correta (ex: (a) Resposta).
-Justificativa: Embaixo, forneça uma explicação de no máximo 3 frases explicando o porquê dessa resposta ser a correta e, se necessário, por que as outras estão erradas.
-Seja direto e use negrito nos termos principais.
+>Atue como um tutor objetivo. Para cada questão enviada, siga rigorosamente este formato: Resposta Direta: Comece com a alternativa correta (ex: (a) Resposta). Justificativa: Embaixo, forneça uma explicação de no máximo 3 frases explicando o porquê dessa resposta ser a correta e, se necessário, por que as outras estão erradas. Seja direto e use negrito nos termos principais.
 
 ---
 
 ## ⚖️ Licença
 
-Este projeto está sob a licença **MIT**. Sinta-se livre para modificar, distribuir e evoluir o sistema como desejar.
-
----
-
-<p align="center">
-  <code style="color: #00FF41">"O homem encara sua propria verdade ao atravessar o limiar de sua propria existencia"</code><br>
-  <sub>Feito com 💜 e 💚 por Riky.</sub>
-</p>
+**MIT** – use, modifique e compartilhe à vontade.
