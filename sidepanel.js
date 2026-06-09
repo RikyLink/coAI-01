@@ -58,6 +58,11 @@ backBtn.addEventListener('click', () => {
     showHub();
   });
 });
+// Click na assinatura do github
+document.querySelector('.bottom-left-signature').addEventListener('click', () => {
+  window.open('https://github.com/RikyLink', '_blank');
+});
+
 
 // Escuta mudanças no storage (ex: menu de contexto)
 chrome.storage.onChanged.addListener((changes, area) => {
