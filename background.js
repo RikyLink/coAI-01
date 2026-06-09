@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(() => {
     // ----- MENU NAS PÁGINAS -----
     chrome.contextMenus.create({
       id: "page-select-ai",
-      title: "🤖 Abrir Colatron com IA",
+      title: "🤖 Abrir coIA-01 com IA",
       contexts: ["page"]
     });
 
