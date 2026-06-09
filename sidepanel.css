@@ -276,3 +276,73 @@ iframe.active {
 #back-to-hub.visible {
   display: flex;
 }
+
+/* ---- LOADING SCREEN ---- */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(244, 236, 225, 0.95); /* tom do fundo do hub */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9997;
+  backdrop-filter: blur(4px);
+}
+
+#loading-screen.active {
+  display: flex;
+}
+
+/* Loader (bateria animada) */
+.loader {
+  width: 48px;
+  height: 40px;
+  position: relative;
+  background: #1A1A1A;
+  border-radius: 15% 15% 35% 35%;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 45px;
+  top: 8px;
+  border: 4px solid #1A1A1A;
+  width: 16px;
+  height: 20px;
+  border-radius: 0 4px 4px 0;
+}
+
+.loader::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 10px;
+  color: #1A1A1A;
+  top: -15px;
+  left: 11px;
+  box-sizing: border-box;
+  animation: animloader 1s ease infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 2px 0px rgba(0, 0, 0, 0),
+                12px 0px rgba(0, 0, 0, 0.3),
+                20px 0px rgba(0, 0, 0, 0);
+  }
+  50% {
+    box-shadow: 2px -5px rgba(0, 0, 0, 0.5),
+                12px -3px rgba(0, 0, 0, 0.5),
+                20px -2px rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    box-shadow: 2px -8px rgba(0, 0, 0, 0),
+                12px -5px rgba(0, 0, 0, 0),
+                20px -5px rgba(0, 0, 0, 0);
+  }
+}

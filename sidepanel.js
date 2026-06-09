@@ -1,6 +1,7 @@
 const iframe = document.getElementById('ai-frame');
 const overlay = document.getElementById('status-overlay');
 const hub = document.getElementById('hub');
+const loadingScreen = document.getElementById('loading-screen');
 const backBtn = document.getElementById('back-to-hub');
 const defaultUrl = "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview";
 
@@ -21,6 +22,7 @@ function showFeedback(url) {
 
 function showHub() {
   hub.style.display = 'flex';
+  loadingScreen.classList.remove('active');
   iframe.classList.remove('active');
   iframe.src = 'about:blank';
   backBtn.classList.remove('visible');
@@ -28,8 +30,20 @@ function showHub() {
 
 function loadAI(url) {
   hub.style.display = 'none';
+  // Oculta o iframe e exibe a tela de loading
+  iframe.classList.remove('active');
+  loadingScreen.classList.add('active');
+
+  // Quando o iframe terminar de carregar, remove o loading
+  iframe.addEventListener('load', function onLoad() {
+    if (iframe.src !== 'about:blank') {
+      loadingScreen.classList.remove('active');
+      iframe.classList.add('active');
+    }
+    iframe.removeEventListener('load', onLoad);
+  });
+
   iframe.src = url;
-  iframe.classList.add('active');
   backBtn.classList.add('visible');
 }
 
