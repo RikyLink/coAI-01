@@ -248,30 +248,7 @@ iframe.active {
   width: 100%;
 }
 
-.stacked-logo {
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  text-align: right;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 0.85;
-  user-select: none;
-}
-
-.logo-top {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #C86B6B;
-}
-
-.logo-bottom {
-  font-size: 24px;
-  font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px #C86B6B;
-  letter-spacing: 1px;
-}
+/* Removido o bloco .stacked-logo, .logo-top e .logo-bottom */
 
 /* ---- BOTÃO VOLTAR (Pílula Redonda Escura) ---- */
 #back-to-hub {
