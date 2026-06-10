@@ -1,11 +1,11 @@
 <h1 align="center">coIA-01</h1>
 
 <p align="center">
-  <a href="https://github.com/RikyLink/Colatron-3000/releases">
-    <img src="https://shieldcn.dev/github/RikyLink/Colatron-3000/release.svg?color=F0ECE5" alt="Release">
+  <a href="https://github.com/RikyLink/coAI-01/releases">
+    <img src="https://shieldcn.dev/github/RikyLink/coAI-01/release.svg?color=F0ECE5" alt="Release">
   </a>
-  <a href="https://github.com/RikyLink/Colatron-3000/commits">
-    <img src="https://shieldcn.dev/github/RikyLink/Colatron-3000/last-commit.svg?color=F0ECE5" alt="Last Commit">
+  <a href="https://github.com/RikyLink/coAI-01/commits">
+    <img src="https://shieldcn.dev/github/RikyLink/coAI-01/last-commit.svg?color=F0ECE5" alt="Last Commit">
   </a>
   <img src="https://shieldcn.dev/flag/Br.svg?color=F0ECE5" alt="Brazil">
 </p>
