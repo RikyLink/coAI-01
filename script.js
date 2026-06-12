@@ -3,6 +3,7 @@
 
   const statusOverlay = document.getElementById('status-overlay');
   const cards = document.querySelectorAll('.hub-card');
+  const themeCheckbox = document.querySelector('.theme-switch__checkbox');
 
   // Função para exibir status overlay
   function showStatus(text) {
@@ -13,6 +14,38 @@
   // Função para esconder status overlay
   function hideStatus() {
     statusOverlay.classList.remove('active');
+  }
+
+  // --- TEMA ESCURO/CLARO ---
+  function applyTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark-mode');
+      themeCheckbox.checked = true;
+    } else {
+      document.body.classList.remove('dark-mode');
+      themeCheckbox.checked = false;
+    }
+  }
+
+  // Carregar tema salvo
+  const savedTheme = localStorage.getItem('coIA-01-theme');
+  if (savedTheme === 'dark') {
+    applyTheme(true);
+  } else {
+    applyTheme(false);
+  }
+
+  // Listener do toggle
+  if (themeCheckbox) {
+    themeCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        applyTheme(true);
+        localStorage.setItem('coIA-01-theme', 'dark');
+      } else {
+        applyTheme(false);
+        localStorage.setItem('coIA-01-theme', 'light');
+      }
+    });
   }
 
   // Event listeners para os cards
