@@ -272,12 +272,12 @@ body, html {
   top: 20px;
   right: 20px;
   z-index: 9998;
-  transform: scale(0.9);
+  transform: scale(0.54);
   transition: transform 0.3s ease;
 }
 
 .theme-switch-wrapper:hover {
-  transform: scale(1);
+  transform: scale(0.6);
 }
 
 /* From Uiverse.io by mamyapro123 */ 
