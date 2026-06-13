@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <nav class="top-nav">
+    <a href="#hub" class="nav-link active">Home</a>
+    <a href="#install" class="nav-link">Como instalar</a>
+    <a href="#about" class="nav-link">Sobre</a>
+  </nav>
+
   <div id="status-overlay"></div>
 
   <!-- SVG FILTERS FOR THEME SWITCH -->
@@ -71,7 +77,10 @@
 
     <div class="hub-container">
       <div class="hub-header">
-        <h1 class="main-title">coIA-01</h1>
+        <h1 class="main-title">
+          coIA-01
+          <a class="title-signature" href="https://github.com" target="_blank" rel="noopener">riky on github</a>
+        </h1>
         <div class="hub-subtitle">INTEGRAÇÃO INTELIGENTE DE INTERFACES</div>
         <div class="ai-available">
           <span>IA's disponíveis</span>
@@ -107,9 +116,42 @@
         <div class="signature-line"></div>
       </div>
     </div>
-
-    <a class="bottom-left-signature" href="https://github.com" target="_blank" rel="noopener">riky on github</a>
   </div>
+
+  <!-- SECTION: COMO INSTALAR -->
+  <section id="install">
+    <div class="section-content">
+      <h2 class="section-title">Como instalar</h2>
+      <p class="section-text">
+        <strong>1.</strong> baixe o arquivo compactado <strong>coAI-01 v1.0.4</strong>.
+      </p>
+      <p class="section-text">
+        <strong>2.</strong> Acesse <code>chrome://extensions/</code> e ative o <strong>Modo do desenvolvedor</strong>.
+      </p>
+      <p class="section-text">
+        <strong>3.</strong> Clique em <strong>"Carregar sem compactação"</strong> e selecione a pasta.
+      </p>
+      <p class="section-text">
+        <strong>4.</strong> Fixe a extensão na barra e clique no ícone da extensão.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION: SOBRE -->
+  <section id="about">
+    <div class="section-content">
+      <h2 class="section-title">Sobre</h2>
+      <p class="section-text">
+        O <strong>coIA-01</strong> é um hub leve que reúne os maiores assistentes de IA — Copilot, Gemini, DeepSeek, ChatGPT e Google — numa única interface minimalista. Criado para profissionais que alternam constantemente entre plataformas, o coIA-01 elimina o atrito de múltiplos logins e janelas.
+      </p>
+      <p class="section-text">
+        Versão atual: <strong>v1.0.4</strong> — estável, portátil e gratuita.
+      </p>
+      <p class="section-text">
+        Desenvolvido por <strong>RikyLink</strong> com foco em design limpo e produtividade real.
+      </p>
+    </div>
+  </section>
 
   <script src="script.js"></script>
 </body>
