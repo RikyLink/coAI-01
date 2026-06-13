@@ -905,7 +905,7 @@ body, html {
 
 /* ---- DARK MODE ---- */
 body.dark-mode {
-  background: #1a1a2e;
+  background: #1e1e2e;
 }
 
 body.dark-mode .bg-outline-text {
@@ -914,25 +914,25 @@ body.dark-mode .bg-outline-text {
 }
 
 body.dark-mode .hub-header .main-title {
-  color: #f4ece1;
+  color: #cdd6f4;
 }
 
 body.dark-mode .hub-subtitle {
-  color: #a09888;
+  color: #a6adc8;
 }
 
 body.dark-mode .ai-available span {
-  color: #a09888;
+  color: #a6adc8;
 }
 
 body.dark-mode .ai-icons svg {
-  fill: #f4ece1;
+  fill: #cdd6f4;
 }
 
 body.dark-mode .hub-card {
-  background: #2a2a3e;
-  border-color: #f4ece1;
-  color: #f4ece1;
+  background: #313244;
+  border-color: #7f849c;
+  color: #cdd6f4;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
@@ -942,41 +942,79 @@ body.dark-mode .hub-card:first-child {
 }
 
 body.dark-mode .hub-card:first-child .card-desc {
-  color: #5a5a5a;
+  color: #45475a;
+}
+
+body.dark-mode .hub-card:first-child {
+  background: #cba6f7;
+  border-color: #cba6f7;
+  color: #1e1e2e;
+}
+
+body.dark-mode .hub-card:first-child .card-desc {
+  color: #45475a;
 }
 
 body.dark-mode .hub-card:hover {
-  background: #C86B6B;
-  border-color: #C86B6B;
-  color: #FFFFFF;
+  background: #f5c2e7;
+  border-color: #f5c2e7;
+  color: #1e1e2e;
+  box-shadow: 0 6px 15px rgba(245, 194, 231, 0.25);
+}
+
+body.dark-mode .hub-card:hover .card-desc {
+  color: #45475a;
 }
 
 body.dark-mode .card-desc {
-  color: #a09888;
+  color: #a6adc8;
 }
 
 body.dark-mode .signature-text {
-  color: #f4ece1;
+  color: #cdd6f4;
 }
 
 body.dark-mode .signature-line {
-  background: #f4ece1;
+  background: #cdd6f4;
 }
 
 body.dark-mode .title-signature {
-  color: #a09888;
+  color: #a6adc8;
 }
 
 body.dark-mode #status-overlay {
-  background: #f4ece1;
-  color: #1a1a1a;
+  background: #cdd6f4;
+  color: #1e1e2e;
 }
 
 body.dark-mode .top-nav .nav-link {
-  color: #a09888;
+  color: #a6adc8;
 }
 
 body.dark-mode .top-nav .nav-link:hover,
 body.dark-mode .top-nav .nav-link.active {
-  color: #f4ece1;
+  color: #cdd6f4;
+}
+
+body.dark-mode .nav-link::after {
+  background: #cba6f7;
+}
+
+body.dark-mode .section-title {
+  color: #cdd6f4;
+}
+
+body.dark-mode .section-text {
+  color: #a6adc8;
+}
+
+body.dark-mode .section-text strong {
+  color: #cdd6f4;
+}
+
+body.dark-mode code {
+  background: #313244;
+  color: #f5c2e7;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
