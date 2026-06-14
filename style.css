@@ -219,6 +219,76 @@ body, html {
   justify-content: center;
 }
 
+.ai-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+/* Tooltip (balão) */
+.ai-icon-wrapper::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1A1A1A;
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateX(-50%) translateY(4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Triangulinho do balão */
+.ai-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #1A1A1A;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateX(-50%) translateY(4px);
+}
+
+/* Exibe o tooltip no hover */
+.ai-icon-wrapper:hover::after,
+.ai-icon-wrapper:hover::before {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.ai-icons svg {
+  width: 20px;
+  height: 20px;
+  fill: #1A1A1A;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease, fill 0.25s ease;
+}
+
+/* Efeito hover no ícone */
+.ai-icon-wrapper:hover svg {
+  fill: #C86B6B;
+  opacity: 1;
+  transform: scale(1.15);
+}
+
 .ai-icons svg {
   width: 20px;
   height: 20px;
@@ -1045,4 +1115,18 @@ body.dark-mode code {
   color: #f5c2e7;
   padding: 2px 6px;
   border-radius: 4px;
+}
+
+body.dark-mode .ai-icon-wrapper::after {
+  background: #cdd6f4;
+  color: #1e1e2e;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .ai-icon-wrapper::before {
+  border-top-color: #cdd6f4;
+}
+
+body.dark-mode .ai-icon-wrapper:hover svg {
+  fill: #f5c2e7;
 }
