@@ -136,8 +136,21 @@ if (savedTheme === 'dark') {
 // Listener do toggle — transição de gradiente a partir do canto superior direito
 const themeTransition = document.getElementById('theme-transition');
 
+// Trava anti-spam: bloqueia novos cliques enquanto a transição roda
+let themeLocked = false;
+const THEME_LOCK_MS = 800; // duração total da animação + margem
+
 if (themeCheckbox) {
   themeCheckbox.addEventListener('change', function () {
+    // Se estiver travado, reverte o estado visual do checkbox e ignora
+    if (themeLocked) {
+      this.checked = !this.checked;
+      return;
+    }
+
+    // Ativa a trava imediatamente
+    themeLocked = true;
+
     const isDark = this.checked;
 
     // 1. Prepara o overlay com a cor do tema de destino
@@ -156,5 +169,10 @@ if (themeCheckbox) {
     setTimeout(() => {
       themeTransition.classList.remove('active');
     }, 750);
+
+    // 4. Libera a trava após a animação terminar
+    setTimeout(() => {
+      themeLocked = false;
+    }, THEME_LOCK_MS);
   });
 }
