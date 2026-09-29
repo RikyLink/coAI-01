@@ -9,7 +9,8 @@ const names = {
   "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview": "AI Studio",
   "https://gemini.google.com/app": "Gemini",
   "https://chat.deepseek.com/": "DeepSeek",
-  "https://chatgpt.com/": "ChatGPT"
+  "https://chatgpt.com/": "ChatGPT",
+  "https://claude.ai/new": "Claude"
 };
 
 const themeSwitchWrapper = document.querySelector('.theme-switch-wrapper');

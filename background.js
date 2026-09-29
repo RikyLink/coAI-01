@@ -41,6 +41,13 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["action"]
     });
 
+    chrome.contextMenus.create({
+      id: "claude",
+      parentId: "select-ai",
+      title: "Claude",
+      contexts: ["action"]
+    });
+
     // ----- MENU NAS PÁGINAS -----
     chrome.contextMenus.create({
       id: "page-select-ai",
@@ -76,6 +83,13 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["page"]
     });
 
+    chrome.contextMenus.create({
+      id: "page-claude",
+      parentId: "page-select-ai",
+      title: "Claude",
+      contexts: ["page"]
+    });
+
   });
 });
 
@@ -86,10 +100,12 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     "gemini": "https://gemini.google.com/app",
     "deepseek": "https://chat.deepseek.com/",
     "chatgpt": "https://chatgpt.com/",
+    "claude": "https://claude.ai/new",
     "page-ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
     "page-gemini": "https://gemini.google.com/app",
     "page-deepseek": "https://chat.deepseek.com/",
-    "page-chatgpt": "https://chatgpt.com/"
+    "page-chatgpt": "https://chatgpt.com/",
+    "page-claude": "https://claude.ai/new"
   };
 
   if (urls[info.menuItemId]) {
