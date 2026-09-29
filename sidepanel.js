@@ -14,6 +14,18 @@ const names = {
 };
 
 const themeSwitchWrapper = document.querySelector('.theme-switch-wrapper');
+const skeletonScreen = document.getElementById('skeleton-screen');
+
+// Mostra o skeleton por um tempo e resolve a Promise
+function showSkeleton(duration = 800) {
+  return new Promise((resolve) => {
+    skeletonScreen.classList.add('active');
+    setTimeout(() => {
+      skeletonScreen.classList.remove('active');
+      resolve();
+    }, duration);
+  });
+}
 
 function showFeedback(url) {
   const name = names[url] || "Interface";
@@ -51,13 +63,18 @@ function loadAI(url) {
   backBtn.classList.add('visible');
 }
 
-// Inicialização: verifica se há IA salva
-chrome.storage.local.get(['selectedAI'], (result) => {
-  if (result.selectedAI && result.selectedAI !== 'hub') {
-    loadAI(result.selectedAI);
-  } else {
-    showHub();
-  }
+// Inicialização: esconde hub e mostra skeleton primeiro
+hub.style.display = 'none';
+themeSwitchWrapper.style.display = 'none';
+
+showSkeleton(850).then(() => {
+  chrome.storage.local.get(['selectedAI'], (result) => {
+    if (result.selectedAI && result.selectedAI !== 'hub') {
+      loadAI(result.selectedAI);
+    } else {
+      showHub();
+    }
+  });
 });
 
 // Clique nos cards do hub
@@ -116,15 +133,28 @@ if (savedTheme === 'dark') {
   applyTheme(false);
 }
 
-// Listener do toggle
+// Listener do toggle — transição de gradiente a partir do canto superior direito
+const themeTransition = document.getElementById('theme-transition');
+
 if (themeCheckbox) {
-  themeCheckbox.addEventListener('change', function() {
-    if (this.checked) {
-      applyTheme(true);
-      localStorage.setItem('coIA-01-theme', 'dark');
-    } else {
-      applyTheme(false);
-      localStorage.setItem('coIA-01-theme', 'light');
-    }
+  themeCheckbox.addEventListener('change', function () {
+    const isDark = this.checked;
+
+    // 1. Prepara o overlay com a cor do tema de destino
+    themeTransition.classList.remove('to-dark', 'to-light', 'active');
+    // Force reflow para reiniciar a animação
+    void themeTransition.offsetWidth;
+    themeTransition.classList.add(isDark ? 'to-dark' : 'to-light', 'active');
+
+    // 2. Troca o tema quando o overlay já cobriu a tela
+    setTimeout(() => {
+      applyTheme(isDark);
+      localStorage.setItem('coIA-01-theme', isDark ? 'dark' : 'light');
+    }, 380);
+
+    // 3. Limpa o estado do overlay ao final
+    setTimeout(() => {
+      themeTransition.classList.remove('active');
+    }, 750);
   });
 }
