@@ -7,14 +7,14 @@ body, html {
   background: #F4ECE1;
 }
 
-/* ---- THEME TRANSITION (gradiente a partir do canto superior direito) ---- */
+/* ---- THEME TRANSITION (gradiente expandindo de trás do theme switch) ---- */
 #theme-transition {
   position: fixed;
   inset: 0;
   z-index: 9996;
   pointer-events: none;
   opacity: 0;
-  clip-path: circle(0% at 100% 0%);
+  clip-path: circle(0% at calc(100% - 34px) 18px);
   background: radial-gradient(circle at 100% 0%, #FAF7F2 0%, #E9E1D5 100%);
   will-change: clip-path, opacity;
 }
@@ -34,15 +34,15 @@ body, html {
 
 @keyframes themeRipple {
   0% {
-    clip-path: circle(0% at 100% 0%);
+    clip-path: circle(0% at calc(100% - 34px) 18px);
     opacity: 1;
   }
   55% {
-    clip-path: circle(150% at 100% 0%);
+    clip-path: circle(150% at calc(100% - 34px) 18px);
     opacity: 1;
   }
   100% {
-    clip-path: circle(150% at 100% 0%);
+    clip-path: circle(150% at calc(100% - 34px) 18px);
     opacity: 0;
   }
 }
