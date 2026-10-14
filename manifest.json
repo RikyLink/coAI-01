@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "coIA-01",
-  "version": "1.0.4",
+  "version": "1.0.8",
   "description": "Abre o Google AI Studio na barra lateral do Chrome via coIA-01",
   "permissions": [
     "sidePanel",
