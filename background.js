@@ -48,7 +48,7 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["action"]
     });
 
-    // ----- MENU NAS PÁGINAS -----
+    // ----- MENU NAS PÁGINAS (SEM SELEÇÃO) -----
     chrome.contextMenus.create({
       id: "page-select-ai",
       title: "🤖 Abrir coIA-01 com IA",
@@ -90,6 +90,48 @@ chrome.runtime.onInstalled.addListener(() => {
       contexts: ["page"]
     });
 
+    // ----- MENU DE SELEÇÃO DE TEXTO -----
+    chrome.contextMenus.create({
+      id: "selection-ai",
+      title: "🧠 Enviar para a IA...",
+      contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+      id: "selection-ai-studio",
+      parentId: "selection-ai",
+      title: "Google AI Studio",
+      contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+      id: "selection-gemini",
+      parentId: "selection-ai",
+      title: "Gemini",
+      contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+      id: "selection-deepseek",
+      parentId: "selection-ai",
+      title: "DeepSeek",
+      contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+      id: "selection-chatgpt",
+      parentId: "selection-ai",
+      title: "ChatGPT",
+      contexts: ["selection"]
+    });
+
+    chrome.contextMenus.create({
+      id: "selection-claude",
+      parentId: "selection-ai",
+      title: "Claude",
+      contexts: ["selection"]
+    });
+
   });
 });
 
@@ -105,12 +147,51 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     "page-gemini": "https://gemini.google.com/app",
     "page-deepseek": "https://chat.deepseek.com/",
     "page-chatgpt": "https://chatgpt.com/",
-    "page-claude": "https://claude.ai/new"
+    "page-claude": "https://claude.ai/new",
+    "selection-ai-studio": "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview",
+    "selection-gemini": "https://gemini.google.com/app",
+    "selection-deepseek": "https://chat.deepseek.com/",
+    "selection-chatgpt": "https://chatgpt.com/",
+    "selection-claude": "https://claude.ai/new"
   };
 
   if (urls[info.menuItemId]) {
+    const isSelection = info.menuItemId.startsWith("selection-");
+    const isPage = info.menuItemId.startsWith("page-");
+
+    // Copia o texto para a área de transferência usando um script injetado na página atual
+    if (isSelection && info.selectionText && tab && tab.id) {
+      chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: (text) => {
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).catch(err => console.error("Clipboard API error:", err));
+          } else {
+            // Fallback usando execCommand se necessário
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+              document.execCommand('copy');
+            } catch (error) {
+              console.error('Falha ao copiar usando execCommand', error);
+            }
+            textArea.remove();
+          }
+        },
+        args: [info.selectionText]
+      });
+      // Salva um alerta no storage para sinalizar ao sidepanel
+      chrome.storage.local.set({ copiedTextAlert: Date.now() });
+    }
+
     // Open the side panel immediately to preserve the user gesture
-    if (info.menuItemId.startsWith("page-") && tab && tab.id) {
+    if ((isPage || isSelection) && tab && tab.id) {
       chrome.sidePanel.open({ tabId: tab.id }).catch(err => {
         console.error("Erro ao abrir painel lateral:", err);
       });

@@ -34,6 +34,12 @@ function showFeedback(url) {
   setTimeout(() => overlay.classList.remove('active'), 2000);
 }
 
+function showCopiedFeedback() {
+  overlay.textContent = `TEXTO COPIADO! COLE (CTRL+V)`;
+  overlay.classList.add('active');
+  setTimeout(() => overlay.classList.remove('active'), 3500);
+}
+
 function showHub() {
   hub.style.display = 'flex';
   themeSwitchWrapper.style.display = 'block';
@@ -102,16 +108,29 @@ document.querySelector('.bottom-left-signature').addEventListener('click', () =>
 
 // Escuta mudanças no storage (ex: menu de contexto)
 chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'local' && changes.selectedAI) {
-    const newVal = changes.selectedAI.newValue;
-    if (newVal === 'hub') {
-      showHub();
-    } else if (newVal) {
-      loadAI(newVal);
-      showFeedback(newVal);
+  if (area === 'local') {
+    if (changes.selectedAI) {
+      const newVal = changes.selectedAI.newValue;
+      if (newVal === 'hub') {
+        showHub();
+      } else if (newVal) {
+        loadAI(newVal);
+        // Exibe feedback de "SYNC" somente se não houver um aviso de "TEXTO COPIADO!" concorrendo
+        if (!changes.copiedTextAlert) {
+          showFeedback(newVal);
+        }
+      }
+    }
+
+    if (changes.copiedTextAlert) {
+      // Delay pequeno para garantir que o painel e animações abram antes de piscar a mensagem
+      setTimeout(() => {
+        showCopiedFeedback();
+      }, 500);
     }
   }
 });
+
 // ---- THEME SWITCH ----
 const themeCheckbox = document.querySelector('.theme-switch__checkbox');
 
