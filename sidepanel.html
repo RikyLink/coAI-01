@@ -22,6 +22,7 @@
       </filter>
     </defs>
   </svg>
+
   <!-- THEME SWITCH (canto superior direito) -->
   <div class="theme-switch-wrapper">
     <label class="theme-switch">
@@ -168,6 +169,82 @@
   <button id="back-to-hub" title="Voltar ao Hub">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 13V20L4 12L12 4V11H20V13H12Z"></path></svg>
   </button>
+
+  <!-- BOTÃO DE CONFIGURAÇÕES (canto inferior direito) -->
+  <button id="settings-btn" title="Personalizar tema" aria-label="Configurações de tema">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M6.50001 0H9.50001L10.0939 2.37548C10.7276 2.6115 11.3107 2.95155 11.8223 3.37488L14.1782 2.70096L15.6782 5.29904L13.9173 7.00166C13.9717 7.32634 14 7.65987 14 8C14 8.34013 13.9717 8.67366 13.9173 8.99834L15.6782 10.701L14.1782 13.299L11.8223 12.6251C11.3107 13.0484 10.7276 13.3885 10.0939 13.6245L9.50001 16H6.50001L5.90614 13.6245C5.27242 13.3885 4.68934 13.0484 4.17768 12.6251L1.82181 13.299L0.321808 10.701L2.08269 8.99834C2.02831 8.67366 2.00001 8.34013 2.00001 8C2.00001 7.65987 2.02831 7.32634 2.08269 7.00166L0.321808 5.29904L1.82181 2.70096L4.17768 3.37488C4.68934 2.95155 5.27241 2.6115 5.90614 2.37548L6.50001 0ZM8.00001 10C9.10458 10 10 9.10457 10 8C10 6.89543 9.10458 6 8.00001 6C6.89544 6 6.00001 6.89543 6.00001 8C6.00001 9.10457 6.89544 10 8.00001 10Z" fill="currentColor"></path>
+    </svg>
+  </button>
+
+  <!-- PAINEL DE TEMAS -->
+  <div id="settings-panel" role="dialog" aria-label="Escolher tema">
+    <h3 class="settings-title">Tema do Painel</h3>
+    <div class="theme-grid">
+      <button class="theme-option" data-theme="classic" type="button">
+        <div class="theme-preview">
+          <span style="background:#1A1A1A"></span>
+          <span style="background:#C86B6B"></span>
+          <span style="background:#F4ECE1"></span>
+        </div>
+        <span class="theme-name">Clássico</span>
+      </button>
+      <button class="theme-option" data-theme="ocean" type="button">
+        <div class="theme-preview">
+          <span style="background:#0F2A3D"></span>
+          <span style="background:#3E92B8"></span>
+          <span style="background:#E6F0F5"></span>
+        </div>
+        <span class="theme-name">Oceano</span>
+      </button>
+      <button class="theme-option" data-theme="forest" type="button">
+        <div class="theme-preview">
+          <span style="background:#1B2B1A"></span>
+          <span style="background:#5A8B3E"></span>
+          <span style="background:#E8EFE4"></span>
+        </div>
+        <span class="theme-name">Floresta</span>
+      </button>
+      <button class="theme-option" data-theme="sunset" type="button">
+        <div class="theme-preview">
+          <span style="background:#3D1F2E"></span>
+          <span style="background:#E56B4E"></span>
+          <span style="background:#FCEBE0"></span>
+        </div>
+        <span class="theme-name">Sunset</span>
+      </button>
+      <button class="theme-option" data-theme="mono" type="button">
+        <div class="theme-preview">
+          <span style="background:#111111"></span>
+          <span style="background:#555555"></span>
+          <span style="background:#F0F0F0"></span>
+        </div>
+        <span class="theme-name">Mono</span>
+      </button>
+      <button class="theme-option" data-theme="cyber" type="button">
+        <div class="theme-preview">
+          <span style="background:#0A0E27"></span>
+          <span style="background:#7B3FE4"></span>
+          <span style="background:#00FFD0"></span>
+        </div>
+        <span class="theme-name">Cyber</span>
+      </button>
+    </div>
+
+    <button id="edit-ais-btn" class="settings-action-btn" type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+      </svg>
+      <span>Editar IA's</span>
+    </button>
+  </div>
+
+  <!-- Barra de edição (modo reordenar) -->
+  <div id="edit-bar">
+    <span class="edit-bar-text">Arraste para reordenar</span>
+    <button id="cancel-edit-btn" class="edit-bar-btn cancel" type="button">Cancelar</button>
+    <button id="confirm-edit-btn" class="edit-bar-btn confirm" type="button">Confirmar</button>
+  </div>
 
   <!-- Gradient theme transition overlay (expande do canto superior direito) -->
   <div id="theme-transition"></div>
