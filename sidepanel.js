@@ -39,6 +39,26 @@ const names = {
 const themeSwitchWrapper = document.querySelector('.theme-switch-wrapper');
 const skeletonScreen = document.getElementById('skeleton-screen');
 
+// ---- LAYOUT DO HUB (default / bento / minimalist) ----
+const LAYOUT_KEY = 'coIA-01-hub-layout';
+const layoutOptions = document.querySelectorAll('.layout-option');
+
+function applyHubLayout(layout) {
+  const valid = layout || 'default';
+  if (valid === 'default') {
+    document.body.removeAttribute('data-hub-layout');
+  } else {
+    document.body.setAttribute('data-hub-layout', valid);
+  }
+  try { localStorage.setItem(LAYOUT_KEY, valid); } catch (_) {}
+  layoutOptions.forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.layout === valid);
+  });
+}
+
+// Aplica o layout salvo ANTES de qualquer renderização visual
+applyHubLayout(localStorage.getItem(LAYOUT_KEY) || 'default');
+
 // Mostra o skeleton por um tempo e resolve a Promise
 function showSkeleton(duration = 800) {
   return new Promise((resolve) => {
@@ -403,6 +423,16 @@ if (settingsBtn && settingsPanel) {
     opt.addEventListener('click', (e) => {
       e.stopPropagation();
       applyThemePreset(opt.dataset.theme);
+    });
+  });
+
+  // Clique nas opções de layout
+  layoutOptions.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyHubLayout(opt.dataset.layout);
+      // Pequeno feedback ao trocar de layout
+      showToast(`LAYOUT: ${opt.querySelector('.layout-name').textContent.toUpperCase()}`, 1400);
     });
   });
 

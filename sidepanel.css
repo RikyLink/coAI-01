@@ -1738,3 +1738,162 @@ iframe.active {
 .hub-grid.edit-mode .hub-card:hover .card-desc {
   color: var(--card-desc);
 }
+
+/* ==========================================================================
+   HUB LAYOUT MODES (Default / Bento / Minimalist)
+   ========================================================================== */
+
+/* -------- BENTO BOX UI -------- */
+body[data-hub-layout="bento"] .hub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+body[data-hub-layout="bento"] .hub-card {
+  border-radius: 16px;
+  padding: 12px 14px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 86px;
+  justify-content: space-between;
+}
+
+body[data-hub-layout="bento"] .hub-card:first-child {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  min-height: auto;
+  padding: 10px 22px;
+  justify-content: flex-start;
+}
+
+body[data-hub-layout="bento"] .hub-card .card-info {
+  width: 100%;
+}
+
+/* -------- MINIMALIST -------- */
+body[data-hub-layout="minimalist"] .hub-grid {
+  gap: 0;
+}
+
+body[data-hub-layout="minimalist"] .hub-card,
+body[data-hub-layout="minimalist"] .hub-card:first-child {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--card-border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 14px 4px;
+  color: var(--card-text);
+  transform: none;
+}
+
+body[data-hub-layout="minimalist"] .hub-card:first-child .card-desc {
+  color: var(--card-desc);
+}
+
+body[data-hub-layout="minimalist"] .hub-card:hover,
+body[data-hub-layout="minimalist"] .hub-card:first-child:hover {
+  background: transparent;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  transform: none;
+  box-shadow: none;
+}
+
+body[data-hub-layout="minimalist"] .hub-card:hover .card-desc,
+body[data-hub-layout="minimalist"] .hub-card:first-child:hover .card-desc {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   LAYOUT SELECTOR (dentro do painel de configurações)
+   ========================================================================== */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.layout-option {
+  background: transparent;
+  border: 1.5px solid var(--card-border);
+  border-radius: 12px;
+  padding: 8px 6px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--card-text);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.2s ease;
+}
+
+.layout-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.layout-option.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.layout-preview {
+  width: 100%;
+  height: 26px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-grad-2);
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.layout-preview-default {
+  flex-direction: column;
+}
+.layout-preview-default span {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 50px;
+}
+
+.layout-preview-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+}
+.layout-preview-bento span {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+}
+.layout-preview-bento span:first-child {
+  grid-column: span 2;
+}
+
+.layout-preview-minimalist {
+  flex-direction: column;
+  gap: 0;
+}
+.layout-preview-minimalist span {
+  flex: 1;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.layout-name {
+  display: block;
+  line-height: 1;
+}
