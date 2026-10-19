@@ -5,6 +5,29 @@ const loadingScreen = document.getElementById('loading-screen');
 const backBtn = document.getElementById('back-to-hub');
 const defaultUrl = "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview";
 
+const settingsBtn = document.getElementById('settings-btn');
+const settingsPanel = document.getElementById('settings-panel');
+const themeOptions = document.querySelectorAll('.theme-option');
+
+// Elementos do modo edição de IA's
+const hubGrid = document.querySelector('.hub-grid');
+const editAisBtn = document.getElementById('edit-ais-btn');
+const editBar = document.getElementById('edit-bar');
+const confirmEditBtn = document.getElementById('confirm-edit-btn');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+
+let editMode = false;
+let originalOrder = [];
+let draggedCard = null;
+
+const CARD_ORDER_KEY = 'coIA-01-card-order';
+
+// Reseta visualmente o painel de configurações (fechado + sem estado "ativo")
+function resetSettingsUI() {
+  if (settingsPanel) settingsPanel.classList.remove('open');
+  if (settingsBtn) settingsBtn.classList.remove('active');
+}
+
 const names = {
   "https://aistudio.google.com/prompts/new_chat?model=gemini-3-flash-preview": "AI Studio",
   "https://gemini.google.com/app": "Gemini",
@@ -15,6 +38,26 @@ const names = {
 
 const themeSwitchWrapper = document.querySelector('.theme-switch-wrapper');
 const skeletonScreen = document.getElementById('skeleton-screen');
+
+// ---- LAYOUT DO HUB (default / bento / minimalist) ----
+const LAYOUT_KEY = 'coIA-01-hub-layout';
+const layoutOptions = document.querySelectorAll('.layout-option');
+
+function applyHubLayout(layout) {
+  const valid = layout || 'default';
+  if (valid === 'default') {
+    document.body.removeAttribute('data-hub-layout');
+  } else {
+    document.body.setAttribute('data-hub-layout', valid);
+  }
+  try { localStorage.setItem(LAYOUT_KEY, valid); } catch (_) {}
+  layoutOptions.forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.layout === valid);
+  });
+}
+
+// Aplica o layout salvo ANTES de qualquer renderização visual
+applyHubLayout(localStorage.getItem(LAYOUT_KEY) || 'default');
 
 // Mostra o skeleton por um tempo e resolve a Promise
 function showSkeleton(duration = 800) {
@@ -40,9 +83,17 @@ function showCopiedFeedback() {
   setTimeout(() => overlay.classList.remove('active'), 3500);
 }
 
+function showToast(text, duration = 2200) {
+  overlay.textContent = text;
+  overlay.classList.add('active');
+  setTimeout(() => overlay.classList.remove('active'), duration);
+}
+
 function showHub() {
   hub.style.display = 'flex';
   themeSwitchWrapper.style.display = 'block';
+  if (settingsBtn) settingsBtn.style.display = 'flex';
+  resetSettingsUI();
   loadingScreen.classList.remove('active');
   iframe.classList.remove('active');
   iframe.src = 'about:blank';
@@ -52,6 +103,8 @@ function showHub() {
 function loadAI(url) {
   hub.style.display = 'none';
   themeSwitchWrapper.style.display = 'none';
+  if (settingsBtn) settingsBtn.style.display = 'none';
+  resetSettingsUI();
   // Oculta o iframe e exibe a tela de loading
   iframe.classList.remove('active');
   loadingScreen.classList.add('active');
@@ -69,9 +122,41 @@ function loadAI(url) {
   backBtn.classList.add('visible');
 }
 
+// ---- ORDEM DOS CARDS (reordenação) ----
+function applyCardOrder() {
+  if (!hubGrid) return;
+  let saved = [];
+  try {
+    saved = JSON.parse(localStorage.getItem(CARD_ORDER_KEY) || '[]');
+  } catch (_) {
+    saved = [];
+  }
+  if (!Array.isArray(saved) || saved.length === 0) return;
+
+  const cards = Array.from(hubGrid.querySelectorAll('.hub-card'));
+  const map = new Map(cards.map(c => [c.dataset.url, c]));
+
+  // Reinsere na ordem salva
+  saved.forEach(url => {
+    const card = map.get(url);
+    if (card) {
+      hubGrid.appendChild(card);
+      map.delete(url);
+    }
+  });
+
+  // Cards que não estavam na ordem salva vão para o final
+  map.forEach(card => hubGrid.appendChild(card));
+}
+
 // Inicialização: esconde hub e mostra skeleton primeiro
 hub.style.display = 'none';
 themeSwitchWrapper.style.display = 'none';
+if (settingsBtn) settingsBtn.style.display = 'none';
+resetSettingsUI();
+
+// Aplica a ordem salva ANTES de exibir qualquer coisa
+applyCardOrder();
 
 showSkeleton(850).then(() => {
   chrome.storage.local.get(['selectedAI'], (result) => {
@@ -83,9 +168,10 @@ showSkeleton(850).then(() => {
   });
 });
 
-// Clique nos cards do hub
+// Clique nos cards do hub (ignorado no modo edição)
 document.querySelectorAll('.hub-card').forEach(card => {
   card.addEventListener('click', () => {
+    if (editMode) return;
     const url = card.dataset.url;
     chrome.storage.local.set({ selectedAI: url }, () => {
       loadAI(url);
@@ -100,6 +186,115 @@ backBtn.addEventListener('click', () => {
     showHub();
   });
 });
+
+// ---- MODO EDIÇÃO DE IA's (drag & drop) ----
+function enterEditMode() {
+  if (!hubGrid) return;
+  editMode = true;
+  // Guarda a ordem atual para poder cancelar
+  originalOrder = Array.from(hubGrid.querySelectorAll('.hub-card')).map(c => c.dataset.url);
+
+  // Garante que estamos no hub e sem configs abertas
+  showHub();
+
+  hubGrid.classList.add('edit-mode');
+  editBar.classList.add('visible');
+  hubGrid.querySelectorAll('.hub-card').forEach(c => {
+    c.setAttribute('draggable', 'true');
+  });
+
+  showToast('MODO EDIÇÃO ATIVO', 1800);
+}
+
+function exitEditMode(save) {
+  if (!hubGrid) return;
+  editMode = false;
+  hubGrid.classList.remove('edit-mode');
+  editBar.classList.remove('visible');
+  hubGrid.querySelectorAll('.hub-card').forEach(c => {
+    c.removeAttribute('draggable');
+    c.classList.remove('dragging');
+  });
+  draggedCard = null;
+
+  if (save) {
+    const newOrder = Array.from(hubGrid.querySelectorAll('.hub-card')).map(c => c.dataset.url);
+    try {
+      localStorage.setItem(CARD_ORDER_KEY, JSON.stringify(newOrder));
+    } catch (_) {}
+    showToast('ORDEM SALVA!', 1800);
+  } else {
+    // Restaura a ordem original
+    const cards = Array.from(hubGrid.querySelectorAll('.hub-card'));
+    const map = new Map(cards.map(c => [c.dataset.url, c]));
+    originalOrder.forEach(url => {
+      const card = map.get(url);
+      if (card) hubGrid.appendChild(card);
+    });
+    showToast('EDIÇÃO CANCELADA', 1600);
+  }
+}
+
+if (editAisBtn) {
+  editAisBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    enterEditMode();
+  });
+}
+
+if (confirmEditBtn) {
+  confirmEditBtn.addEventListener('click', () => exitEditMode(true));
+}
+
+if (cancelEditBtn) {
+  cancelEditBtn.addEventListener('click', () => exitEditMode(false));
+}
+
+// -- Drag & Drop handlers --
+if (hubGrid) {
+  hubGrid.addEventListener('dragstart', (e) => {
+    if (!editMode) return;
+    const card = e.target.closest('.hub-card');
+    if (!card) return;
+    draggedCard = card;
+    card.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    // Firefox exige setData
+    try { e.dataTransfer.setData('text/plain', card.dataset.url || ''); } catch (_) {}
+  });
+
+  hubGrid.addEventListener('dragend', () => {
+    if (draggedCard) draggedCard.classList.remove('dragging');
+    draggedCard = null;
+  });
+
+  hubGrid.addEventListener('dragover', (e) => {
+    if (!editMode || !draggedCard) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+
+    const target = e.target.closest('.hub-card');
+    if (!target || target === draggedCard) return;
+
+    const rect = target.getBoundingClientRect();
+    const before = e.clientY < rect.top + rect.height / 2;
+
+    if (before) {
+      if (target.previousElementSibling !== draggedCard) {
+        hubGrid.insertBefore(draggedCard, target);
+      }
+    } else {
+      if (target.nextElementSibling !== draggedCard) {
+        hubGrid.insertBefore(draggedCard, target.nextSibling);
+      }
+    }
+  });
+
+  hubGrid.addEventListener('drop', (e) => {
+    if (!editMode) return;
+    e.preventDefault();
+  });
+}
 
 // Click na assinatura do github
 document.querySelector('.bottom-left-signature').addEventListener('click', () => {
@@ -131,7 +326,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
   }
 });
 
-// ---- THEME SWITCH ----
+// ---- THEME SWITCH (modo claro/escuro) ----
 const themeCheckbox = document.querySelector('.theme-switch__checkbox');
 
 function applyTheme(isDark) {
@@ -193,5 +388,67 @@ if (themeCheckbox) {
     setTimeout(() => {
       themeLocked = false;
     }, THEME_LOCK_MS);
+  });
+}
+
+// ---- SELETOR DE PRESETS DE TEMA (6 paletas × claro/escuro) ----
+function applyThemePreset(presetName) {
+  if (!presetName || presetName === 'classic') {
+    document.body.removeAttribute('data-theme');
+  } else {
+    document.body.setAttribute('data-theme', presetName);
+  }
+  localStorage.setItem('coIA-01-theme-preset', presetName);
+
+  // Atualiza o estado ativo dos botões
+  themeOptions.forEach(opt => {
+    opt.classList.toggle('active', opt.dataset.theme === presetName);
+  });
+}
+
+// Carrega o preset salvo (padrão: classic)
+const savedPreset = localStorage.getItem('coIA-01-theme-preset') || 'classic';
+applyThemePreset(savedPreset);
+
+// Toggle do painel
+if (settingsBtn && settingsPanel) {
+  settingsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = settingsPanel.classList.toggle('open');
+    settingsBtn.classList.toggle('active', isOpen);
+  });
+
+  // Clique nas opções de tema
+  themeOptions.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyThemePreset(opt.dataset.theme);
+    });
+  });
+
+  // Clique nas opções de layout
+  layoutOptions.forEach(opt => {
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyHubLayout(opt.dataset.layout);
+      // Pequeno feedback ao trocar de layout
+      showToast(`LAYOUT: ${opt.querySelector('.layout-name').textContent.toUpperCase()}`, 1400);
+    });
+  });
+
+  // Fecha ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!settingsPanel.contains(e.target) && !settingsBtn.contains(e.target)) {
+      settingsPanel.classList.remove('open');
+      settingsBtn.classList.remove('active');
+    }
+  });
+
+  // Fecha com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && settingsPanel.classList.contains('open')) {
+      settingsPanel.classList.remove('open');
+      settingsBtn.classList.remove('active');
+    }
   });
 }
